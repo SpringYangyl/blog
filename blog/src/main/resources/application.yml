@@ -1,18 +1,34 @@
 server:
   port: 7777
+  servlet:
+    context-path: /api
 spring:
   datasource:
-    url: jdbc:mysql://8.130.11.192:3306/sg_blog?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://123.56.91.14:3306/sg_blog?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
-    password: 123456
+    password: 12345678
     driver-class-name: com.mysql.cj.jdbc.Driver
   servlet:
     multipart:
       max-file-size: 2MB
       max-request-size: 5MB
   redis:
-    host: 8.130.11.192
+    host: 123.56.91.14
     port: 6379
+    password: yyl591591591
+  kafka:
+    bootstrap-servers: 123.56.91.14:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      bootstrap-servers: 123.56.91.14:9092
+      group-id: test1
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      enable-auto-commit: true
+
+
 mybatis-plus:
   configuration:
     # 日志

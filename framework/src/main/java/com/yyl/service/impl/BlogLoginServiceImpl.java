@@ -24,20 +24,23 @@ public class BlogLoginServiceImpl implements BlogLoginService {
     private AuthenticationManager authenticationManager;
     @Autowired
     private RedisCache redisCache;
+
     @Override
     public ResponseResult login(User user) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUserName(),user.getPassword());
+        //UserDetail   UserDetailService
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword());
         //ProviderManger 认证  从userdetail service返回user信息
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
-        if(Objects.isNull(authenticate)){
+        if (Objects.isNull(authenticate)) {
             throw new RuntimeException("用户名");
         }
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
         String id = loginUser.getUser().getId().toString();
         String jwt = JwtUtil.createJWT(id);
-        redisCache.setCacheObject("bloglogin"+id,loginUser);
+        redisCache.setCacheObject("bloglogin" + id, loginUser);
         UserInfoVo userInfoVo = BeanCopyUtils.copyBean(loginUser.getUser(), UserInfoVo.class);
-        BlogUserLoginVo blogUserLoginVo = new BlogUserLoginVo(jwt,userInfoVo);
+        redisCache.setCacheObject("token", jwt);
+        BlogUserLoginVo blogUserLoginVo = new BlogUserLoginVo(jwt, userInfoVo);
         return ResponseResult.okResult(blogUserLoginVo);
     }
 
@@ -48,7 +51,7 @@ public class BlogLoginServiceImpl implements BlogLoginService {
         //删除redis中的信息
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         Long id = loginUser.getUser().getId();
-        redisCache.deleteObject("bloglogin"+id);
+        redisCache.deleteObject("bloglogin" + id);
         return ResponseResult.okResult();
     }
 }

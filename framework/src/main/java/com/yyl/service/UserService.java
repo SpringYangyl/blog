@@ -1,6 +1,7 @@
 package com.yyl.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yyl.domain.ResponseResult;
 import com.yyl.entity.User;
 
 
@@ -12,4 +13,9 @@ import com.yyl.entity.User;
  */
 public interface UserService extends IService<User> {
 
+    ResponseResult userInfo();
+
+    ResponseResult updateUserInfo(User user);
+
+    ResponseResult register(User user);
 }

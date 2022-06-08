@@ -1,5 +1,6 @@
 package com.yyl.controller;
 
+import com.yyl.annotation.SysLog;
 import com.yyl.domain.ResponseResult;
 import com.yyl.entity.User;
 import com.yyl.enums.AppHttpCodeEnum;
@@ -16,6 +17,12 @@ public class BlogLoginController {
     @Autowired
     private BlogLoginService blogLoginService;
 
+    /**
+     *
+     * @param user
+     * @return
+     */
+    @SysLog(bussinessName = "login")
     @PostMapping("/login")
     public ResponseResult login(@RequestBody User user){
         if(!StringUtils.hasText(user.getUserName())){
@@ -23,6 +30,12 @@ public class BlogLoginController {
         }
         return blogLoginService.login(user);
     }
+
+    /**
+     *
+     * @return
+     */
+    @SysLog(bussinessName = "logout")
     @PostMapping("/logout")
     public ResponseResult logout(){
         return blogLoginService.logout();

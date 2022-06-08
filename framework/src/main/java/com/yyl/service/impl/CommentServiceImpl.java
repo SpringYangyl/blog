@@ -13,7 +13,6 @@ import com.yyl.mapper.CommentMapper;
 import com.yyl.service.CommentService;
 import com.yyl.service.UserService;
 import com.yyl.utils.BeanCopyUtils;
-import com.yyl.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -31,13 +30,15 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     @Autowired
     UserService userService;
     @Override
-    public ResponseResult commentList(Long articleId, Integer pageNum, Integer pageSize) {
+    public ResponseResult commentList(String commentType, Long articleId, Integer pageNum, Integer pageSize) {
         //查询对应文章下的zi评论
         //根评论  rootid = -1
         LambdaQueryWrapper<Comment> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Comment::getArticleId,articleId);
+        wrapper.eq(commentType == "0",Comment::getArticleId,articleId);
         wrapper.eq(Comment::getRootId,-1);
+        wrapper.eq(Comment::getType,commentType);
         wrapper.orderByDesc(Comment::getCreateTime);
+
         Page<Comment> page = new Page<>(pageNum,pageSize);
         Page<Comment> commentPage = page(page, wrapper);
         List<Comment> records = commentPage.getRecords();
@@ -62,7 +63,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     private List<CommentVo> getChildren(Long id) {
         //查找子评论
         LambdaQueryWrapper<Comment> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Comment::getId,id);
+        wrapper.eq(Comment::getRootId,id);
         List<Comment> list = list(wrapper);
         List<CommentVo> commentVoList = toCommentVoList(list);
         return commentVoList;

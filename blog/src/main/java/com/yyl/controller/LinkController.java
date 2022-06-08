@@ -1,5 +1,6 @@
 package com.yyl.controller;
 
+import com.yyl.annotation.SysLog;
 import com.yyl.domain.ResponseResult;
 import com.yyl.service.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,12 @@ public class LinkController {
     @Autowired
     private LinkService linkService;
 
+    /**
+     *
+     * @return
+     */
     @GetMapping("/getAllLink")
+    @SysLog(bussinessName = "getAllLink")
     public ResponseResult getAllLink(){
         return linkService.getAllLink();
     }

@@ -18,6 +18,7 @@ public class ArticleListVo {
     private String summary;
     //所属分类id
     private String categoryName;
+    private Long categoryId;
     //缩略图
     private String thumbnail;
     //访问量

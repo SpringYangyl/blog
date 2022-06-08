@@ -1,5 +1,6 @@
 package com.yyl.controller;
 
+import com.yyl.annotation.SysLog;
 import com.yyl.domain.ResponseResult;
 import com.yyl.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,11 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    /**
+     *
+     * @return
+     */
+    @SysLog(bussinessName = "getCategoryList")
     @GetMapping("/getCategoryList")
     public ResponseResult getCategoryList(){
         return categoryService.getCategoryList();

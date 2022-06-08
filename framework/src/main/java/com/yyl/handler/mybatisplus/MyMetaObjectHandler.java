@@ -6,6 +6,7 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.HashMap;
 
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
@@ -26,7 +27,11 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        this.setFieldValByName("updateTime", new Date(), metaObject);
-        this.setFieldValByName(" ", SecurityUtils.getUserId(), metaObject);
     }
+
+//    @Override
+//    public void updateFill(MetaObject metaObject) {
+//        this.setFieldValByName("updateTime", new Date(), metaObject);
+//        this.setFieldValByName("updateBy", SecurityUtils.getUserId(), metaObject);
+//    }
 }
