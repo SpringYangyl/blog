@@ -10,11 +10,7 @@ import java.io.ByteArrayInputStream;
 public class OSSTest
 {
 //    public static void main(String[] args) {
-//        String endpoint = "oss-cn-beijing.aliyuncs.com";
-//        String keyid = "LTAI5t6QR8FF4u2FjYuA9ghf";
-//        String keySecret = "uEydst0664UWivI0WnozfSSR5nhWPG";
-//        String bucketName = "edu-138";
-//        String objectName = "exampledir/exampleobject.txt";
+
 //
 //        // 创建OSSClient实例。
 //        OSS ossClient = new OSSClientBuilder().build(endpoint, keyid, keySecret);
